@@ -49,4 +49,7 @@ public:
   Card(Suit s, Value v);
 };
 
+
 #endif
+
+bool operator<(const Card& card, const Card& otherCard);

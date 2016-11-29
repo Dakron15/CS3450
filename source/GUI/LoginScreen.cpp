@@ -75,7 +75,7 @@ bool login::getInput()
 
 bool login::checkLogin(std::string un, std::string pw)
 {
-	//std::ifstream read("C:\\Users\\dozek\\Desktop\\" + un + ".txt");
+	//References for this function from https://www.youtube.com/watch?v=I_aWPGCaaFA
 	std::ifstream read("../../../../CS3450/Resources/data/" + un + ".txt");
 	std::string username;
 	std::string password;
