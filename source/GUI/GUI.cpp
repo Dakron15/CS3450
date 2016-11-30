@@ -26,6 +26,7 @@ public:
   PlayModeScreen *modeScreen;
   HeartsBoard *heartsBoard;
   GameOver *gameOver;
+  std::string introMessage = "Welcome to Deal52, please log in.";
 
 private:
   void OnHello(wxCommandEvent& event);
@@ -76,7 +77,6 @@ EVT_BUTTON(BUTTON_createProfile, MyFrame::OnCreateNewProfile)
 
 EVT_BUTTON(BUTTON_Hearts, MyFrame::OnHearts)
 EVT_BUTTON(BUTTON_Spades, MyFrame::OnSpades)
-EVT_BUTTON(BUTTON_test, MyFrame::OnTest)
 EVT_BUTTON(BUTTON_login, MyFrame::OnLogin)
 EVT_BUTTON(BUTTON_playAgain, MyFrame::OnPlayAgain)
 
@@ -112,7 +112,7 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size)
   : wxFrame(NULL, wxID_ANY, title, pos, size)
 {
   wxMenu *menuFile = new wxMenu;
-  menuFile->Append(ID_Hello, "&Hello...\tCtrl-H",
+  menuFile->Append(ID_Hello, "&Player Statistics...\tCtrl-H",
     "Help string shown in status bar for this menu item");
   menuFile->AppendSeparator();
   menuFile->Append(wxID_EXIT);
@@ -141,12 +141,13 @@ void MyFrame::OnExit(wxCommandEvent& event)
 }
 void MyFrame::OnAbout(wxCommandEvent& event)
 {
-  wxMessageBox("This is a wxWidgets' Hello world sample",
-    "About Hello World", wxOK | wxICON_INFORMATION);
+  wxMessageBox("Deal52 designed for CS3450 class\n\nCreated by Michael Kamerath, Parker Peterson,\n David Helmick, and Nic Biggs",
+    "About Deal52", wxOK | wxICON_INFORMATION);
 }
 void MyFrame::OnHello(wxCommandEvent& event)
 {
-  wxLogMessage("Hello world from wxWidgets!");
+	wxMessageBox(introMessage,
+		"Welcome to Deal52", wxOK | wxICON_INFORMATION);
 }
 
 void MyFrame::OnCreateAccount(wxCommandEvent& event)
@@ -173,6 +174,7 @@ void MyFrame::OnLogin(wxCommandEvent& event)
 {
 	if (loginScreen->getInput())
 	{
+		loginScreen->setLogin(introMessage);
 		loginScreen->hide();
 		modeScreen->display();
 	}
@@ -181,6 +183,7 @@ void MyFrame::OnLogin(wxCommandEvent& event)
 
 void MyFrame::OnModeCancel(wxCommandEvent& event)
 {
+	introMessage = "Welcome to Deal52, please log in.";
 	modeScreen->hide();
 	loginScreen->display();
 }

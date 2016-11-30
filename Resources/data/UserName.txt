@@ -1,11 +1,11 @@
-Nic
-Biggs
+UserName
+Password
 Hearts Win/Lose
-20
-7
+0
+0
 Spades Win/Lose
-2
-15
+0
+0
 Overall Win/Lose
-22
-22
+0
+0
