@@ -21,7 +21,7 @@ login::login(wxFrame* parent) : wxPanel(parent, wxID_ANY, wxDefaultPosition,
 	userNameTxt = new wxTextCtrl(this, 0, "UserName", wxDefaultPosition,
 		wxSize(140, 30));
 	passwordTxt = new wxTextCtrl(this, 0, "Password", wxDefaultPosition,
-		wxSize(140, 30));
+		wxSize(140, 30), wxTE_PASSWORD);
 	passwordTxt->SetDefaultStyle(wxTextAttr(wxTE_PASSWORD));
 
 	horizontalBoxTwo->Add(userNameTxt, wxCENTER, 0);
