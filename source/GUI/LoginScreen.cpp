@@ -56,8 +56,10 @@ bool login::getInput()
 {
 	login::username = userNameTxt->GetLineText(0);
 	login::password = passwordTxt->GetLineText(0);
+
 	std::cout << login::username << std::endl;
 	std::cout << login::password << std::endl;
+
 	if (checkLogin(login::username, login::password))
 	{
 		std::cout << "Correct Login!\n";

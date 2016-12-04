@@ -55,6 +55,7 @@ void CreateAccount::getInput()
 	std::cout << username << std::endl;
 	std::cout << password << std::endl;
 	makeAccount(username, password);
+
 }
 
 void CreateAccount::makeAccount(std::string un, std::string pw)
@@ -62,6 +63,7 @@ void CreateAccount::makeAccount(std::string un, std::string pw)
 	//Registers an account with the entered username and password
 	//Currently uses a relative path for the login info. Is there a better approach?
 	std::ofstream file;
+
 	if (!std::ifstream("../../../../CS3450/Resources/data/" + un + ".txt"))
 	{
 		file.open("../../../../CS3450/Resources/data/" + un + ".txt");

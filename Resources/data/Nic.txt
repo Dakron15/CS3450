@@ -1,0 +1,11 @@
+Nic
+Biggs
+Hearts Win/Lose
+20
+7
+Spades Win/Lose
+2
+15
+Overall Win/Lose
+22
+22
