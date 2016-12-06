@@ -11,6 +11,7 @@
 
 // Standard Includes
 #include <memory>
+#include <algorithm>
 
 class Player
 {
@@ -26,6 +27,16 @@ public:
   void playCard(std::unique_ptr<Card>);
   void insertCardToHand(Card card);
   int getScore();
+  void setScore(int);
+  int getBid() const;
+  void setBid(int);
+  int getBags() const;
+  void setBags(int);
+  int getTricksWon() const;
+  void setTricksWon(int);
+  void incrementTricksWon();
+  void organizeHand(std::vector<Card>& userHand);
+};
 
   int getBid() const;
   void setBid(int);

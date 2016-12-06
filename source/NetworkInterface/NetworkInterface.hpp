@@ -3,8 +3,8 @@
 
 #include "GeneralMessage.hpp"
 #include "TCPConnection.hpp"
-#include "source/PlayerAPI/Player.hpp"
-//#include <boost/asio.hpp>
+#include "source/ClientInfo/Player.hpp"
+#include <boost/asio.hpp>
 #include <iostream>
 #include <thread>
 
