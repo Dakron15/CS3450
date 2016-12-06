@@ -2,7 +2,7 @@
 #define GAMEOVER_HPP
 
 #include <wx/wx.h>
-
+#include <source/ClientInfo/Player.hpp>
 
 class GameOver : public wxPanel
 {
@@ -12,6 +12,7 @@ public:
 	wxButton *mainMenu;
 	void display();
 	void hide();
+	void displayScore(int p1, int p2, int p3, int p4);
 
 };
 

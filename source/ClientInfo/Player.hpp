@@ -6,6 +6,9 @@
 #include <vector>
 #include "Card.hpp"
 #include <string>
+#include "source/GUI/LoginScreen.hpp"
+#include <sstream>
+
 // Standard Includes
 #include <memory>
 
@@ -31,6 +34,7 @@ public:
   int getTricksWon() const;
   void setTricksWon(int);
   void incrementTricksWon();
-};
 
+};
 #endif
+//#endif

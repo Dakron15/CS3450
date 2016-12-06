@@ -8,6 +8,7 @@
 #include "CreateAccount.hpp"
 #include "HeartsBoard.hpp"
 #include "SpadesBoard.hpp"
+#include "GameMode.hpp"
 
 
 #ifndef WX_PRECOMP
@@ -42,7 +43,6 @@ private:
   void OnModeCancel(wxCommandEvent& event);
   void OnHearts(wxCommandEvent& event);
   void OnSpades(wxCommandEvent& event);
-  void OnTest(wxCommandEvent& event);
   void OnPlayAgain(wxCommandEvent& event);
   void OnMainMenu(wxCommandEvent& event);
 
@@ -127,7 +127,8 @@ EVT_BUTTON(BUTTON_CARD1_SPADES + 9, MyFrame::OnCard9_SPADES)
 EVT_BUTTON(BUTTON_CARD1_SPADES + 10, MyFrame::OnCard10_SPADES)
 EVT_BUTTON(BUTTON_CARD1_SPADES + 11, MyFrame::OnCard11_SPADES)
 EVT_BUTTON(BUTTON_CARD1_SPADES + 12, MyFrame::OnCard12_SPADES)
-EVT_BUTTON(BUTTON_RETURN_BUTTON_SPADES, MyFrame::OnExit)
+EVT_BUTTON(BUTTON_RETURN_BUTTON_HEARTS, MyFrame::OnReturnButtonHearts)
+EVT_BUTTON(BUTTON_RETURN_BUTTON_SPADES, MyFrame::OnReturnButtonSpades)
 EVT_BUTTON(BUTTON_BID, MyFrame::OnBid)
 
 
@@ -161,7 +162,6 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size)
   loginScreen = new login(this);
   createAccountScreen = new CreateAccount(this);
   modeScreen = new PlayModeScreen(this);
-
   heartsBoard = new HeartsBoard(this);
   gameOver = new GameOver(this);
   spadesBoard = new SpadesBoard(this);
@@ -226,33 +226,39 @@ void MyFrame::OnModeCancel(wxCommandEvent& event)
 void MyFrame::OnHearts(wxCommandEvent& event)
 {
 	modeScreen->hide();
+	heartsBoard->username = loginScreen->username;
+	heartsBoard->heartsGame = true;
+	spadesBoard->spadesGame = false;
 	heartsBoard->display();
 }
 
 void MyFrame::OnSpades(wxCommandEvent& event)
 {
 	modeScreen->hide();
+	spadesBoard->username = loginScreen->username;
+	spadesBoard->spadesGame = true;
+	heartsBoard->heartsGame = false;
 	spadesBoard->display();
-}
-
-void MyFrame::OnTest(wxCommandEvent& event)
-{
-	modeScreen->hide();
-	gameOver->display();
 }
 
 void MyFrame::OnPlayAgain(wxCommandEvent& event)
 {
 	gameOver->hide();
-	modeScreen->display();
-
+	if (heartsBoard->heartsGame == true) {
+		heartsBoard->display();
+	}
+	else if (spadesBoard->spadesGame == true) {
+		spadesBoard->display();
+	}
+	else {
+		modeScreen->display();
+	}
 }
 
 void MyFrame::OnMainMenu(wxCommandEvent& event)
 {
 	gameOver->hide();
 	modeScreen->display();
-
 
 }
 
@@ -441,20 +447,26 @@ void MyFrame::OnBid(wxCommandEvent & event)
 
 void MyFrame::OnReturnButtonHearts(wxCommandEvent & event)
 {
+	gameOver->displayScore(heartsBoard->p1s, heartsBoard->p2s, heartsBoard->p3s, heartsBoard->p4s);
 	heartsBoard->hide();
 	heartsBoard->DestroyChildren();
 	heartsBoard->Destroy();
 	heartsBoard = new HeartsBoard(this);
-	modeScreen->display();
+	heartsBoard->heartsGame = true;
+	spadesBoard->spadesGame = false;
+	gameOver->display();
 }
 
 void MyFrame::OnReturnButtonSpades(wxCommandEvent & event)
 {
+	gameOver->displayScore(spadesBoard->p1s, spadesBoard->p2s, spadesBoard->p3s, spadesBoard->p4s);
 	spadesBoard->hide();
 	spadesBoard->DestroyChildren();
 	spadesBoard->Destroy();
 	spadesBoard = new SpadesBoard(this);
-	modeScreen->display();
+	spadesBoard->spadesGame = true;
+	heartsBoard->heartsGame = false;
+	gameOver->display();
 }
 
 int main(int argc, char* argv[])

@@ -4,6 +4,7 @@
 #include <wx/wx.h>
 #include <vector>
 #include "source\ClientInfo\Player.hpp"
+#include "GameOver.hpp"
 
 
 class SpadesBoard : public wxPanel
@@ -11,6 +12,7 @@ class SpadesBoard : public wxPanel
 public:
 	SpadesBoard(wxFrame* parent);
 	std::vector<Player> players;
+	bool single = true;
 	int turn; //this refers to who's turn it is
 	int turnOrder = 0; //this refers to what turn out of the four in the trick we are on
 	int trickNum = 0;
@@ -19,10 +21,16 @@ public:
 	std::vector<int> p1PassCardsIndices;
 	std::vector<Card> centerPile;
 	bool brokenSpades = false;
+	bool spadesGame = false;
 
 	wxTextCtrl *bidText;
 	wxButton *bidButton;
 	void onBidButton();
+
+	int p1s = 0;
+	int p2s = 0;
+	int p3s = 0;
+	int p4s = 0;
 
 	wxString player1Score;
 	wxString player2Score;
@@ -88,6 +96,19 @@ public:
 	void makeBids();
 	void updateScoreBoard();
 	wxButton *returnButton;
+
+	std::string username;
+	std::string password;
+	std::string heartName;
+	std::string heartWin;
+	std::string heartLose;
+	std::string spadeName;
+	std::string spadeWin;
+	std::string spadeLose;
+	std::string allName;
+	std::string allWin;
+	std::string allLose;
+
 };
 
 enum
@@ -97,6 +118,6 @@ enum
 	BUTTON_CARD_OTHER_SPADES = wxID_HIGHEST + 49,
 	BUTTON_CARD_OTHER2_SPADES = wxID_HIGHEST + 50,
 	BUTTON_BID = wxID_ANY,
-	BUTTON_RETURN_BUTTON_SPADES = wxID_HIGHEST+99
+	BUTTON_RETURN_BUTTON_SPADES = wxID_HIGHEST+101,
 };
 #endif

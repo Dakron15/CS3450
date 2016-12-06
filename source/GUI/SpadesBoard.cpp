@@ -91,6 +91,7 @@ void SpadesBoard::display() //called when the Spades button is pressed on the ga
 	players.push_back(player2);
 	players.push_back(player3);
 	players.push_back(player4);
+	std::cout << "players ok\n";
 	spadesPlay();
 
 }
@@ -292,9 +293,9 @@ bool SpadesBoard::validateMove(int index, Card move, int numTrick, int turn)
 	return false;
 }
 
-// checks to see if a players hand is all hearts.
+// checks to see if a players hand is all spades.
 // takes a vector of cards, ie the player's hand
-// returns a bool of whether all the cards are hearts
+// returns a bool of whether all the cards are spades
 bool SpadesBoard::allSpades(std::vector<Card> h)
 {
 
@@ -338,6 +339,11 @@ void SpadesBoard::updateScoreBoard()
 	p2Bid << players[1].getBid();
 	p3Bid << players[2].getBid();
 	p4Bid << players[3].getBid();
+
+	p1s = players[0].getScore();
+	p2s = players[1].getScore();
+	p3s = players[2].getScore();
+	p4s = players[3].getScore();
 
 	player1Score = "You: " + p1Score;
 	player2Score = "Player 2 Score: " + p2Score;
@@ -520,6 +526,67 @@ void SpadesBoard::takeTurn()
 							highestIndex = i;
 						}
 					}
+
+					std::ifstream read("../../../../CS3450/Resources/data/" + username + ".txt");
+
+					std::getline(read, username);
+					std::getline(read, password);
+					std::getline(read, heartName);
+					std::getline(read, heartWin);
+					std::getline(read, heartLose);
+					std::getline(read, spadeName);
+					std::getline(read, spadeWin);
+					std::getline(read, spadeLose);
+					std::getline(read, allName);
+					std::getline(read, allWin);
+					std::getline(read, allLose);
+					read.close();
+
+					std::ofstream file;
+
+					if (highestIndex == 0 && std::ifstream("../../../../CS3450/Resources/data/" + username + ".txt"))
+					{
+						int tempScore = 0;
+						int tempScore2 = 0;
+						int tempScore3 = 0;
+						std::istringstream(spadeWin) >> tempScore;
+						std::istringstream(allWin) >> tempScore2;
+						tempScore++;
+						tempScore2++;
+						file.open("../../../../CS3450/Resources/data/" + username + ".txt");
+						file << username << std::endl << password << std::endl;
+						file << "Hearts Win/Lose\n" << heartWin << std::endl << heartLose << std::endl;
+						file << "Spades Win/Lose\n" << tempScore << std::endl << spadeLose << std::endl;
+						file << "Overall Win/Lose\n" << tempScore2 << std::endl << allLose << std::endl;
+						file.close();
+						std::cout << "Account was updated\n";
+					}
+
+					else if (std::ifstream("../../../../CS3450/Resources/data/" + username + ".txt"))
+					{
+						int tempScore = 0;
+						int tempScore2 = 0;
+						int tempScore3 = 0;
+						std::istringstream(spadeLose) >> tempScore;
+						std::istringstream(allLose) >> tempScore2;
+						tempScore++;
+						tempScore2++;
+						file.open("../../../../CS3450/Resources/data/" + username + ".txt");
+						file << username << std::endl << password << std::endl;
+						file << "Hearts Win/Lose\n" << heartWin << std::endl << heartLose << std::endl;
+						file << "Spades Win/Lose\n" << spadeWin << std::endl << tempScore << std::endl;
+						file << "Overall Win/Lose\n" << allWin << std::endl << tempScore2 << std::endl;
+						file.close();
+						std::cout << "Account was updated\n";
+					}
+
+					else {
+						std::cout << "Invalid stat update\n";
+					}
+
+
+
+
 					std::string message = "Player " + std::to_string(highestIndex + 1) + " is the winner!";
 					wxMessageBox(message, "Game Over", wxOK | wxICON_INFORMATION);
 					returnButton = new wxButton(this, BUTTON_RETURN_BUTTON_SPADES, _T("Exit"), wxDefaultPosition, wxSize(140, 30));

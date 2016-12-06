@@ -7,7 +7,7 @@ if(CMAKE_CONFIGURATION_TYPES)
 endif()
 project(Client)
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}) # Findexternpro.cmake
-set(externpro_REV 16.07.1)
+set(externpro_REV 16.10.3)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /EHsc")
 find_package(externpro REQUIRED)
 xpCommonFlags()

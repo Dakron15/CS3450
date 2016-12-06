@@ -4,6 +4,7 @@
 #include <wx/wx.h>
 #include <vector>
 #include "source\ClientInfo\Player.hpp"
+#include "GameOver.hpp"
 
 
 class HeartsBoard : public wxPanel
@@ -11,6 +12,7 @@ class HeartsBoard : public wxPanel
 public:
 	HeartsBoard(wxFrame* parent);
 	std::vector<Player> players;
+	bool single = true;
 	int turn; //this refers to who's turn it is
 	int turnOrder=0; //this refers to what turn out of the four in the trick we are on
 	int trickNum = 0; 
@@ -19,6 +21,11 @@ public:
 	std::vector<int> p1PassCardsIndices;
 	std::vector<Card> centerPile;
 	bool brokenHearts = false;
+
+	int p1s = 0;
+	int p2s = 0;
+	int p3s = 0;
+	int p4s = 0;
 
 	wxString player1Score;
 	wxString player2Score;
@@ -69,7 +76,21 @@ public:
 	int endTurn(int currentPlayer);
 	void dealCards(std::vector<Card>& Deck);
 	void updateScoreBoard();
+	bool heartsGame = false;
 	wxButton *returnButton;
+
+	std::string username;
+	std::string password;
+	std::string heartName;
+	std::string heartWin;
+	std::string heartLose;
+	std::string spadeName;
+	std::string spadeWin;
+	std::string spadeLose;
+	std::string allName;
+	std::string allWin;
+	std::string allLose;
+
 };
 
 enum
@@ -78,6 +99,7 @@ enum
 	BUTTON_CARD1 = wxID_HIGHEST + 17,
 	BUTTON_CARD_OTHER = wxID_HIGHEST + 30,
 	BUTTON_CARD_OTHER2 = wxID_HIGHEST + 31,
-	BUTTON_RETURN_BUTTON_HEARTS = wxID_HIGHEST+51
+	BUTTON_RETURN_BUTTON_HEARTS = wxID_HIGHEST+100,
+
 };
 #endif

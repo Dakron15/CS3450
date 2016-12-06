@@ -3,7 +3,6 @@
 
 #include <string>
 
-
 enum Suit
 {
   HEARTS,

@@ -12,8 +12,6 @@ public:
 	wxButton *spades;
 	wxButton *crazyEights;
 	wxButton *modeCancel;
-	wxBitmap test1;
-	wxBitmapButton *test2;
 	void display();
 	void hide();
 

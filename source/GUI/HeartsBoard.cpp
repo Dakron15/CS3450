@@ -10,6 +10,7 @@
 HeartsBoard::HeartsBoard(wxFrame* parent) : wxPanel(parent, wxID_ANY, wxDefaultPosition,
 	wxSize(wxSystemSettings::GetMetric(wxSYS_SCREEN_X)*.5, wxSystemSettings::GetMetric(wxSYS_SCREEN_Y)*.5), wxTAB_TRAVERSAL, wxPanelNameStr)
 {
+
 	//Sizers
 	verticalBoxMain = new wxFlexGridSizer(3, 0, 20, 20);
 	horizontalBoxBtm = new wxBoxSizer(wxHORIZONTAL);
@@ -95,12 +96,19 @@ HeartsBoard::HeartsBoard(wxFrame* parent) : wxPanel(parent, wxID_ANY, wxDefaultP
 void HeartsBoard::display() //called when the hearts button is pressed on the game select screen. initializes the game
 {
 	Show(1);
-	Player player1, player2, player3, player4;
-	players.push_back(player1);
-	players.push_back(player2);
-	players.push_back(player3);
-	players.push_back(player4);
-	heartsPlay();
+	if (single == true)
+	{
+		Player player1, player2, player3, player4;
+		players.push_back(player1);
+		players.push_back(player2);
+		players.push_back(player3);
+		players.push_back(player4);
+		heartsPlay();
+	}
+	else
+	{
+
+	}
 
 }
 
@@ -403,6 +411,64 @@ void HeartsBoard::takeTurn()
 		}
 		std::string message = "Player " + std::to_string(lowestIndex+1) + " is the winner!";
 		wxMessageBox(message, "Game Over", wxOK | wxICON_INFORMATION);
+
+		std::ifstream read("../../../../CS3450/Resources/data/" + username + ".txt");
+
+		std::getline(read, username);
+		std::getline(read, password);
+		std::getline(read, heartName);
+		std::getline(read, heartWin);
+		std::getline(read, heartLose);
+		std::getline(read, spadeName);
+		std::getline(read, spadeWin);
+		std::getline(read, spadeLose);
+		std::getline(read, allName);
+		std::getline(read, allWin);
+		std::getline(read, allLose);
+		read.close();
+
+		std::ofstream file;
+
+		if (lowestIndex == 0 && std::ifstream("../../../../CS3450/Resources/data/" + username + ".txt"))
+		{
+			int tempScore = 0;
+			int tempScore2 = 0;
+			int tempScore3 = 0;
+			std::istringstream(heartWin) >> tempScore;
+			std::istringstream(allWin) >> tempScore2;
+			tempScore++;
+			tempScore2++;
+			file.open("../../../../CS3450/Resources/data/" + username + ".txt");
+			file << username << std::endl << password << std::endl;
+			file << "Hearts Win/Lose\n" << tempScore << std::endl << heartLose << std::endl;
+			file << "Spades Win/Lose\n" << spadeWin << std::endl << spadeLose << std::endl;
+			file << "Overall Win/Lose\n" << tempScore2 << std::endl << allLose << std::endl;
+			file.close();
+			std::cout << "Account was updated\n";
+		}
+
+		else if (std::ifstream("../../../../CS3450/Resources/data/" + username + ".txt"))
+		{
+			int tempScore = 0;
+			int tempScore2 = 0;
+			int tempScore3 = 0;
+			std::istringstream(heartLose) >> tempScore;
+			std::istringstream(allLose) >> tempScore2;
+			tempScore++;
+			tempScore2++;
+			file.open("../../../../CS3450/Resources/data/" + username + ".txt");
+			file << username << std::endl << password << std::endl;
+			file << "Hearts Win/Lose\n" << heartWin << std::endl << tempScore << std::endl;
+			file << "Spades Win/Lose\n" << spadeWin << std::endl << spadeLose << std::endl;
+			file << "Overall Win/Lose\n" << allWin << std::endl << tempScore2 << std::endl;
+			file.close();
+			std::cout << "Account was updated\n";
+		}
+		
+		else {
+			std::cout << "Invalid stat update\n";
+		}
+
 		//Hide();
 		//we need to make it so when the game is over it will take you back to the game select screen.
 		horizontalBoxCenter->Add(returnButton);
@@ -576,6 +642,11 @@ void HeartsBoard::updateScoreBoard()
 	p2Score << players[1].getScore();
 	p3Score << players[2].getScore();
 	p4Score << players[3].getScore();
+
+	p1s = players[0].getScore();
+	p2s = players[1].getScore();
+	p3s = players[2].getScore();
+	p4s = players[3].getScore();
 
 	player1Score = "You: " + p1Score;
 	player2Score = "Player 2 Score: " + p2Score;

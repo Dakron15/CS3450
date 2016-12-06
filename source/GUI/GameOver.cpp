@@ -50,3 +50,38 @@ void GameOver::hide()
 {
 	Show(0);
 }
+
+void GameOver::displayScore(int p1, int p2, int p3, int p4) {
+
+	wxFlexGridSizer *verticalBox = new wxFlexGridSizer(3, 0, 10, 10);
+	wxBoxSizer *horizontalBox = new wxBoxSizer(wxHORIZONTAL);
+	wxBoxSizer *horizontalBoxTwo = new wxBoxSizer(wxHORIZONTAL);
+	wxGridSizer *gridBox = new wxGridSizer(2, 2, 3, 3);
+
+	mainMenu = new wxButton(this, BUTTON_mainMenu, _T("Main Menu"), wxDefaultPosition, wxSize(140, 30));
+	playAgain = new wxButton(this, BUTTON_playAgain, _T("Play Again"), wxDefaultPosition, wxSize(140, 30));
+
+	horizontalBox->Add(mainMenu, wxCENTER, 0);
+	horizontalBox->Add(playAgain, wxCENTER, 0);
+
+	horizontalBoxTwo->Add(new wxStaticText(this, 0, "Game Over! You Win/Lose!!", wxDefaultPosition,
+		wxSize(240, 30)), 1, wxCENTER, 0);
+
+	gridBox->Add(new wxStaticText(this, 0, "Player 1 Score: " + p1, wxDefaultPosition,
+		wxSize(140, 30)), 1, wxCENTER, 0);
+	gridBox->Add(new wxStaticText(this, 0, "Player 2 Score: " + p2, wxDefaultPosition,
+		wxSize(140, 30)), 1, wxCENTER, 0);
+	gridBox->Add(new wxStaticText(this, 0, "Player 3 Score: " + p3, wxDefaultPosition,
+		wxSize(140, 30)), 1, wxCENTER, 0);
+	gridBox->Add(new wxStaticText(this, 0, "Player 4 Score: " + p4, wxDefaultPosition,
+		wxSize(140, 30)), 1, wxCENTER, 0);
+
+	verticalBox->Add(horizontalBoxTwo, wxCENTER, 0);
+	verticalBox->Add(gridBox, wxCENTER, 0);
+	verticalBox->Add(horizontalBox, wxCENTER, 0);
+
+
+
+	SetSizerAndFit(verticalBox);
+	CenterOnParent();
+}
